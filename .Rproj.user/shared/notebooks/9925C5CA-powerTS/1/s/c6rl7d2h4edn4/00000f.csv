@@ -1,0 +1,93 @@
+"0","#| echo: off "
+"0",""
+"0","import pandas as pd"
+"0",""
+"0","# Loading and preprocessing steps"
+"0","power_df = pd.read_csv('./data/dataset.csv') "
+"0",""
+"0","# Define as métricas desejadas"
+"0","metricas = ['potmin', 'potmax', 'potavg'] "
+"0",""
+"0","power_df = power_df.rename(columns={""Date and time"": ""Datetime""})"
+"0","power_df = power_df.set_index('Datetime')"
+"0","power_df.index = power_df.to_datetime(power_df.index)"
+"2","G3;Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+  File ""[90m]8;line = 6318;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/generic.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/generic.py]8;;[39m"", line 6318, in __getattr__
+    return object.__getattribute__(self, name)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'to_datetime'
+g"
+"0","/*"
+"2","G3;  File ""<string>"", line 1
+    /*
+    ^
+SyntaxError: invalid syntax
+g"
+"0","power_df_transp = []"
+"0",""
+"0","# Processa cada métrica"
+"0","for metrica in metricas:"
+"0","    colunas = [col for col in power_df.columns if col.startswith(metrica)]"
+"0","    "
+"0","    df_melt = power_df[[""Datetime""] + colunas].melt("
+"0","        id_vars=""Datetime"","
+"0","        var_name=""variavel"","
+"0","        value_name=""valor"""
+"0","    )"
+"0","    "
+"0","    # Extrai o nome do equipamento (remove prefixo da métrica)"
+"0","    df_melt[""equipamento""] = df_melt[""variavel""].str.replace(f""{metrica}_"", """", regex=False)"
+"0","    df_melt[""metrica""] = metrica"
+"0","    "
+"0","    power_df_transp.append(df_melt[[""Datetime"", ""equipamento"", ""metrica"", ""valor""]])"
+"0","    "
+"0","# Concatena tudo em um único dataframe longo"
+"0","power_df_long = pd.concat(power_df_transp, ignore_index=True)"
+"2","G3;Traceback (most recent call last):
+  File ""<string>"", line 4, in <module>
+  File ""[90m]8;line = 4113;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/frame.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/frame.py]8;;[39m"", line 4113, in __getitem__
+    indexer = self.columns._get_indexer_strict(key, ""columns"")[1]
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File ""[90m]8;line = 6212;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py]8;;[39m"", line 6212, in _get_indexer_strict
+    self._raise_if_missing(keyarr, indexer, axis_name)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File ""[90m]8;line = 6264;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/indexes/base.py]8;;[39m"", line 6264, in _raise_if_missing
+    raise KeyError(f""{not_found} not in index"")
+KeyError: ""['Datetime'] not in index""
+gG3;Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+  File ""[90m]8;line = 382;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/reshape/concat.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/reshape/concat.py]8;;[39m"", line 382, in concat
+    op = _Concatenator(
+        objs,
+    ...<8 lines>...
+        sort=sort,
+    )
+  File ""[90m]8;line = 445;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/reshape/concat.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/reshape/concat.py]8;;[39m"", line 445, in __init__
+    objs, keys = self._clean_keys_and_objs(objs, keys)
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File ""[90m]8;line = 507;file:///Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/reshape/concat.py/Users/william/minilab/powermanager/.venv/lib/python3.13/site-packages/pandas/core/reshape/concat.py]8;;[39m"", line 507, in _clean_keys_and_objs
+    raise ValueError(""No objects to concatenate"")
+ValueError: No objects to concatenate
+g"
+"0","# Visualiza as primeiras linhas"
+"0","print(""Primeiras linhas do DataFrame longo :\n"")"
+"1","Primeiras linhas do DataFrame longo :
+
+"
+"0","print(power_df_long.head(15))"
+"2","G3;Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+AttributeError: 'list' object has no attribute 'head'
+g"
+"0","power_df_long.describe()"
+"2","G3;Traceback (most recent call last):
+  File ""<string>"", line 1, in <module>
+AttributeError: 'list' object has no attribute 'describe'
+g"
+"0","*/"
+"2","G3;  File ""<string>"", line 1
+    */
+     ^
+SyntaxError: invalid syntax
+g"

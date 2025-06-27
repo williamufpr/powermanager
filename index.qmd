@@ -1,0 +1,62 @@
+---
+title: "index"
+format: html
+---
+
+# Analise de consumo de equipamentos POWEREDGE
+
+## 1. Carregando e inspecionando dados
+
+### 
+
+```{python}
+#| echo: false
+
+import numpy as np
+import pandas as pd
+import datetime as dt
+import seaborn as sns
+import matplotlib.pyplot as plt
+import xgboost as xgb
+from sklearn.metrics import mean_squared_error
+
+ENERGY_DATAFILE = "./data/dataset.csv"
+energy_raw = pd.read_csv(ENERGY_DATAFILE)
+print(energy_raw.shape)
+energy_raw.head()
+
+# Remover espaços dos nomes de colunas
+energy_raw.columns = energy_raw.columns.str.strip()  # remove espaços nas bordas
+energy_raw.columns = energy_raw.columns.str.replace(" ", "_")  # troca espaços por underline
+
+# Data Types checking 
+
+energy_raw.dtypes 
+
+print('Transformando ....')
+energy_raw.Date_and_time = pd.to_datetime(energy_raw.Date_and_time)
+energy_raw.dtypes 
+
+
+
+```
+
+## 1.1 Estatísticas sobre os dados
+
+```{python}
+#| echo off 
+
+# Summary statistics
+summary_statistics = energy_raw.describe()
+color_pal = sns.color_palette()
+plt.style.use('fivethirtyeight')
+
+# energy_raw = energy_raw.set_index(Date_and_time)
+
+energy_raw.plot(style='.',
+        figsize=(15, 5),
+        color=color_pal[0],
+        title='Power Edge consumption ')
+        
+plt.show()
+```
