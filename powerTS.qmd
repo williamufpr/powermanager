@@ -3,50 +3,30 @@ title: "powerTS"
 format: html
 ---
 
-# Análise de Time Series POWER Edge 
+# Análise de Time Series POWER Edge
+
+## 1. Carregamento de Dados
 
 ```{python}
-#| echo: off 
 
+
+import numpy as np
 import pandas as pd
+import datetime as dt
+import seaborn as sns 
+import matplotlib.pyplot as plt 
 
-# Loading and preprocessing steps
-power_df = pd.read_csv('./data/dataset.csv') 
-
-# Define as métricas desejadas
-metricas = ['potmin', 'potmax', 'potavg'] 
-
-power_df = power_df.rename(columns={"Date and time": "Datetime"})
-power_df = power_df.set_index('Datetime')
-power_df.index = power_df.to_datetime(power_df.index)
-
-/*
-power_df_transp = []
-
-# Processa cada métrica
-for metrica in metricas:
-    colunas = [col for col in power_df.columns if col.startswith(metrica)]
-    
-    df_melt = power_df[["Datetime"] + colunas].melt(
-        id_vars="Datetime",
-        var_name="variavel",
-        value_name="valor"
-    )
-    
-    # Extrai o nome do equipamento (remove prefixo da métrica)
-    df_melt["equipamento"] = df_melt["variavel"].str.replace(f"{metrica}_", "", regex=False)
-    df_melt["metrica"] = metrica
-    
-    power_df_transp.append(df_melt[["Datetime", "equipamento", "metrica", "valor"]])
-
-# Concatena tudo em um único dataframe longo
-power_df_long = pd.concat(power_df_transp, ignore_index=True)
+DATASET_FILENAME = "./data/dataset.csv"
 
 
-# Visualiza as primeiras linhas
-print("Primeiras linhas do DataFrame longo :\n")
-print(power_df_long.head(15))
-power_df_long.describe()
+energy_raw = pd.read_csv(DATASET_FILENAME)
+print(energy_raw.shape)
+energy_raw.head() 
 
-*/
+print(energy_raw.dtypes)
+
+energy_raw['Date and time'] = pd.to_datetime(energy_raw['Date and time'])
+print(energy_raw.dtypes)    
 ```
+
+### 1.1 Transformations
