@@ -3,13 +3,20 @@ title: "powerTS"
 format: html
 ---
 
-# Análise de Time Series POWER Edge 
+# Análise de Time Series POWER Edge
+
+## 1. Carregamento de Dados
 
 ```{python}
-#| echo: off 
 
+
+import numpy as np
 import pandas as pd
+import datetime as dt
+import seaborn as sns 
+import matplotlib.pyplot as plt 
 
+<<<<<<< HEAD
 # Loading and preprocessing steps
 power_df = pd.read_csv('./data/dataset.csv',parse_dates=["Date and time"])
 
@@ -63,4 +70,19 @@ plt.style.use("seaborn")
 power_df_long['valor'].plot(title='Consumo de Energia', figsize=(10,6))
 plt.ylabel('Consumption [MW]')
 plt.xlabel('Data')
+=======
+DATASET_FILENAME = "./data/dataset.csv"
+
+
+energy_raw = pd.read_csv(DATASET_FILENAME)
+print(energy_raw.shape)
+energy_raw.head() 
+
+print(energy_raw.dtypes)
+
+energy_raw['Date and time'] = pd.to_datetime(energy_raw['Date and time'])
+print(energy_raw.dtypes)    
+>>>>>>> 75bdb71100b6f364832f5194c6f8c4bbcce610d2
 ```
+
+### 1.1 Transformations
