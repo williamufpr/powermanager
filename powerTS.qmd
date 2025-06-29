@@ -11,16 +11,19 @@ format: html
 import pandas as pd
 
 # Loading and preprocessing steps
-power_df = pd.read_csv('./data/dataset.csv') 
+power_df = pd.read_csv('./data/dataset.csv',parse_dates=["Date and time"])
 
 # Define as métricas desejadas
 metricas = ['potmin', 'potmax', 'potavg'] 
 
-power_df = power_df.rename(columns={"Date and time": "Datetime"})
-power_df = power_df.set_index('Datetime')
-power_df.index = power_df.to_datetime(power_df.index)
 
-/*
+print(power_df.columns)
+power_df = power_df.rename(columns={"Date and time": "Datetime"})
+print(power_df.columns) 
+
+# power_df = power_df.set_index('Datetime')
+# power_df.index = power_df.to_datetime(power_df.index)
+
 power_df_transp = []
 
 # Processa cada métrica
@@ -42,11 +45,22 @@ for metrica in metricas:
 # Concatena tudo em um único dataframe longo
 power_df_long = pd.concat(power_df_transp, ignore_index=True)
 
-
 # Visualiza as primeiras linhas
-print("Primeiras linhas do DataFrame longo :\n")
+print("Primeiras linhas do DataFrame longo GPT:\n")
 print(power_df_long.head(15))
-power_df_long.describe()
 
-*/
+```
+
+## Plotagem de Informações Iniciais 
+
+```{python}
+import matplotlib.pyplot as plt
+ 
+# Set pyplot style
+plt.style.use("seaborn")
+
+# Plot
+power_df_long['valor'].plot(title='Consumo de Energia', figsize=(10,6))
+plt.ylabel('Consumption [MW]')
+plt.xlabel('Data')
 ```
